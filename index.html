@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Image Diff</title>
+    <script src="lib/DPA-WebDrive/js/DragAndDropHandler.js" defer></script>
+    <script src="lib/DPA-WebDrive/js/Utils.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+  <body>
+    <p>
+      <label>Dynamic alpha blur max: <input value="10" type="number" id="blur" min="0" onchange="recalculate()"/></label>
+    </p>
+    <canvas id="base" data-path="base" width="256" height="256"></canvas>
+    <canvas id="result" data-path="result" width="256" height="256"></canvas>
+    <canvas id="overlay" width="256" height="256"></canvas>
+    <canvas id="transparency" width="256" height="256"></canvas>
+    <canvas id="choices" width="256" height="256"></canvas>
+    <canvas id="guess" width="256" height="256"></canvas>
+  </body>
+</html>

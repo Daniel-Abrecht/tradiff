@@ -1,0 +1,3 @@
+[submodule "lib/DPA-WebDrive"]
+	path = lib/DPA-WebDrive
+	url = https://github.com/Daniel-Abrecht/DPA-WebDrive.git
