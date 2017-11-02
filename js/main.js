@@ -1,5 +1,7 @@
 "use strict";
 
+var form = document.getElementById("form");
+
 function recalculate(){
   var w = Math.min(cs.base.width ,cs.result.width );
   var h = Math.min(cs.base.height,cs.result.height);
@@ -27,6 +29,9 @@ function recalculate(){
   var tEd = bE.data;
   var bF = cs.guess.context.createImageData(w,h);
   var tFd = bF.data;
+
+  var gvmax = +form.blur.value;
+  var mode = +form.mode.value;
 
   // Attemp to calculate the overlay image as good as possible
   for(var y=0; y<h; y++)
@@ -72,8 +77,6 @@ function recalculate(){
     tFd[b+3] = 255;
   }
 
-  var gvmax = +document.getElementById("blur").value;
-
   // Post processing gussed transparency levels, currently just adding a blur effect
   // Here is much room for improvement
   for(var j=0; j<h; j++)
@@ -110,9 +113,20 @@ function recalculate(){
       B[0] = bma[a];
     if( B[0] <= bmi[a] )
       B[0] = bmi[a];
-    B[1] = (C[1] - A[1]) / B[0] + A[1];
-    B[2] = (C[2] - A[2]) / B[0] + A[2];
-    B[3] = (C[3] - A[3]) / B[0] + A[3];
+    switch(mode){
+      case 0: { // Overlay
+        B[1] = (C[1] - A[1]) / B[0] + A[1];
+        B[2] = (C[2] - A[2]) / B[0] + A[2];
+        B[3] = (C[3] - A[3]) / B[0] + A[3];
+      } break;
+      case 1: { // Underlay
+        // The bigger A[0] is, the more imprecise is the color. For A[0]==1 it's unknowable.
+        // TODO: Calculate the number of possibe color choices and the color choice for each color component like it's already done for the transparency component to optain a possible color range and extrapolate/interpolate from surrownding pixels
+        B[1] = (C[1] - A[0]*A[1]) / (1-A[0]);
+        B[2] = (C[2] - A[0]*A[2]) / (1-A[0]);
+        B[3] = (C[3] - A[0]*A[3]) / (1-A[0]);
+      } break;
+    }
 
     // result
     tBd[b+0] = Math.round(B[1]*255);
@@ -133,6 +147,12 @@ function recalculate(){
   cs.choices.context.putImageData(bE,0,0);
   cs.guess.context.putImageData(bF,0,0);
 
+}
+
+function setbg(bg){
+  for( let k in cs ){
+    cs[k].style.background = bg;
+  }
 }
 
 const dragAndDropHandler = new DragAndDropHandler( window, {
@@ -167,3 +187,5 @@ var cs = {
 for( let k in cs ){
   cs[k].context = cs[k].getContext("2d");
 }
+
+recalculate();

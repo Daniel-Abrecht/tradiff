@@ -9,14 +9,24 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
   </head>
   <body>
-    <p>
-      <label>Dynamic alpha blur max: <input value="10" type="number" id="blur" min="0" onchange="recalculate()"/></label>
-    </p>
-    <canvas id="base" data-path="base" width="256" height="256"></canvas>
-    <canvas id="result" data-path="result" width="256" height="256"></canvas>
-    <canvas id="overlay" width="256" height="256"></canvas>
-    <canvas id="transparency" width="256" height="256"></canvas>
-    <canvas id="choices" width="256" height="256"></canvas>
-    <canvas id="guess" width="256" height="256"></canvas>
+    <form id="form">
+      <div>
+        <label><input type="radio" name="mode" value="0" onchange="recalculate()" checked="checked"/> Overlay</label>&emsp;
+        <label><input type="radio" name="mode" value="1" onchange="recalculate()"/> Base</label>
+      </div>
+      <label>Dynamic alpha blur max: <input value="0" type="number" name="blur" min="0" onchange="recalculate()"/></label>
+      <div>
+        <label>Background color: <input type="color" oninput="setbg(this.value)"/></label>
+        <input type="button" onclick="setbg(null)" value="reset"/>
+      </div>
+    </form>
+    <div class="nospace">
+      <canvas id="base" data-path="base" width="256" height="256"></canvas>
+      <canvas id="result" data-path="result" width="256" height="256"></canvas>
+      <canvas id="overlay" width="256" height="256"></canvas>
+      <canvas id="transparency" width="256" height="256"></canvas>
+      <canvas id="choices" width="256" height="256"></canvas>
+      <canvas id="guess" width="256" height="256"></canvas>
+     </div>
   </body>
 </html>

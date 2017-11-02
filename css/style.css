@@ -7,12 +7,30 @@ canvas {
 	</svg>');
 	background-size: 5mm;
 	max-width: calc( 50% - 10px );
+	border: 1px solid #ccc;
+	margin: 5px;
 }
 
 canvas.dragover {
 	box-shadow: 0 0 5px 3px #00F;
 }
 
-body {
-	text-align: center;
+form > * {
+	display: block;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.nospace {
+	font-size: 0;
+	padding: 5px;
+}
+
+form {
+	padding: 10px;
+	border-bottom: 1px solid #CCC;
 }
